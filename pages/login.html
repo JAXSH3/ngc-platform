@@ -6,112 +6,49 @@
     <title>Login - NGC</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
-    <style>
-        .auth-page-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 60px); /* Full height minus top-nav */
-            padding: 2rem;
-            background-color: #f4f7f9; /* Match main content background */
-        }
-        .auth-form-wrapper {
-            background-color: #fff;
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 420px;
-        }
-        .auth-form-wrapper h1 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
-            font-size: 1.8rem;
-        }
-        .social-login-divider {
-            text-align: center;
-            margin: 1.5rem 0;
-            color: #777;
-            position: relative;
-        }
-        .social-login-divider::before,
-        .social-login-divider::after {
-            content: '';
-            display: block;
-            width: 40%;
-            height: 1px;
-            background-color: #ccc;
-            position: absolute;
-            top: 50%;
-        }
-        .social-login-divider::before {
-            left: 0;
-        }
-        .social-login-divider::after {
-            right: 0;
-        }
-        .btn-google {
-            background-color: #db4437;
-            color: white;
-            width: 100%;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        .btn-google:hover {
-            background-color: #c23321;
-        }
-        .btn-google svg {
-            width: 18px;
-            height: 18px;
-        }
-        .form-footer-text {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-        }
-    </style>
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+    <!-- No inline styles needed, all handled by style.css -->
 </head>
 <body>
-    <!-- Simplified Top Nav for Auth Pages -->
-    <nav class="top-nav">
-        <div class="nav-left">
-            <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
-                <img src="../assets/logo.png" alt="NGC Logo" class="logo">
-                <span class="brand-name">NGC</span>
-            </a>
-        </div>
-    </nav>
+    <div class="app-container auth-page-container"> <!-- auth-page-container for fullscreen modal effect -->
+        
+        <!-- Simplified/Optional Top Nav for Auth Pages, can be hidden if true fullscreen modal is desired -->
+        <nav class="top-nav" style="position: absolute; top: 0; background: transparent; box-shadow: none; border-bottom: none;">
+            <div class="nav-left">
+                <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="../assets/NGC_logo.png" alt="NGC Logo" class="logo">
+                    <span class="brand-name glowing-text">NGC</span>
+                </a>
+            </div>
+            <!-- No nav-middle or nav-right for cleaner auth page -->
+        </nav>
 
-    <div class="auth-page-container">
         <div class="auth-form-wrapper">
-            <h1>Login to NGC</h1>
+            <h1>Access Your NGC Dashboard</h1>
+            <div id="messageContainer" style="text-align: center; margin-bottom: 1.5rem; font-size: 0.9rem;"></div>
             <form id="loginForm">
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" required placeholder="you@example.com">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
                 </div>
-                <button type="submit" class="btn" style="width: 100%;">Login</button>
+                <button type="submit" class="btn" style="width: 100%;">Login to NGC</button>
             </form>
 
-            <div class="social-login-divider">OR</div>
+            <div class="social-login-divider">OR CONTINUE WITH</div>
 
-            <button class="btn btn-google" id="googleLoginBtn">
-                <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-                Login with Google
+            <button class="btn btn-google" id="googleLoginBtn" style="width: 100%;">
+                <!-- Replace with Lucide icon: google -->
+                <span class="icon">[G]</span> Login with Google 
             </button>
 
-            <p class="form-footer-text">
-                Don't have an account? <a href="signup.html">Sign Up</a>
+            <p class="form-footer-text" style="margin-top: 2rem;">
+                Don't have an account? <a href="signup.html">Create Account</a>
             </p>
-             <p class="form-footer-text">
+             <p class="form-footer-text" style="margin-top: 0.5rem;">
                 <a href="#">Forgot Password?</a>
             </p>
         </div>
@@ -120,24 +57,67 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
+            const messageContainer = document.getElementById('messageContainer');
+
             if (loginForm) {
-                loginForm.addEventListener('submit', (event) => {
+                loginForm.addEventListener('submit', async (event) => {
                     event.preventDefault();
-                    // Placeholder for login logic
-                    alert('Login functionality to be implemented. Redirecting to dashboard (simulated).');
-                    // Simulate successful login:
-                    // localStorage.setItem('isLoggedIn', 'true');
-                    window.location.href = '../index.html';
+                    messageContainer.textContent = ''; 
+                    messageContainer.style.color = 'var(--color-accent-highlight)'; // Default error color
+
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+
+                    if (!email || !password) {
+                        messageContainer.textContent = 'Please provide both email and password.';
+                        return;
+                    }
+
+                    // Add loading state to button
+                    const submitButton = loginForm.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.textContent;
+                    submitButton.textContent = 'Logging In...';
+                    submitButton.disabled = true;
+
+                    try {
+                        const response = await fetch('http://localhost:5001/api/v1/auth/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email, password }),
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            messageContainer.style.color = 'var(--color-accent-primary)'; // Success color
+                            messageContainer.textContent = 'Login successful! Redirecting...';
+                            localStorage.setItem('authToken', data.token);
+                            localStorage.setItem('ngcUser', JSON.stringify(data.user));
+                            
+                            setTimeout(() => {
+                                window.location.href = '../index.html'; 
+                            }, 1500);
+                        } else {
+                            messageContainer.textContent = data.error || data.message || 'Login failed. Please check your credentials.';
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        messageContainer.textContent = 'An error occurred. Please try again later.';
+                    } finally {
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+                    }
                 });
             }
 
             const googleLoginBtn = document.getElementById('googleLoginBtn');
             if (googleLoginBtn) {
                 googleLoginBtn.addEventListener('click', () => {
-                    alert('Google Login functionality to be implemented.');
-                    // Simulate successful login:
-                    // localStorage.setItem('isLoggedIn', 'true');
-                    // window.location.href = '../index.html';
+                    // Placeholder for Google OAuth integration
+                    messageContainer.textContent = 'Google Login functionality to be implemented.';
+                    messageContainer.style.color = 'var(--color-accent-info)';
                 });
             }
         });

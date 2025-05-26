@@ -6,69 +6,24 @@
     <title>Premium Zone - NGC</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
-    <style>
-        .premium-content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-        .premium-info {
-            background-color: #e9f5ff;
-            border: 1px solid #b3d7ff;
-            color: #004085;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        .premium-info h2 {
-            margin-top: 0;
-            color: #0056b3;
-        }
-        .premium-info .btn {
-            margin-top: 1rem;
-            background-color: #ffc107;
-            color: #333;
-            border-color: #ffc107;
-        }
-        .premium-info .btn:hover {
-            background-color: #e0a800;
-            border-color: #d39e00;
-        }
-        .content-card.locked::after {
-            content: '🔒 Premium';
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0,0,0,0.7);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 3px;
-            font-size: 0.8em;
-        }
-         .content-card.locked .card-content {
-            opacity: 0.5;
-            pointer-events: none; /* Prevent interaction with locked content */
-        }
-    </style>
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+    <!-- Inline styles removed, relying on global style.css -->
 </head>
 <body>
     <div class="app-container">
         <!-- Top Navigation Bar -->
         <nav class="top-nav">
             <div class="nav-left">
-                 <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
-                    <img src="../assets/logo.png" alt="NGC Logo" class="logo">
-                    <span class="brand-name">NGC</span>
+                <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="../assets/NGC_logo.png" alt="NGC Logo" class="logo">
+                    <span class="brand-name glowing-text">NGC</span>
                 </a>
             </div>
             <div class="nav-middle">
-                <input type="search" class="smart-search-bar" placeholder="Search AI tools, prompts, research...">
+                <input type="search" class="smart-search-bar" placeholder="AI Search: What do you want to build today?">
             </div>
             <div class="nav-right">
-                <button class="auth-button" id="authButton">Login / Sign Up</button>
+                <!-- Auth state handled by js/app.js -->
             </div>
         </nav>
 
@@ -76,103 +31,151 @@
             <!-- Sidebar Navigation -->
             <aside class="sidebar">
                 <ul class="sidebar-nav-list">
-                    <li><a href="../index.html#all-tools">All Tools</a></li>
-                    <li><a href="../index.html#prompts">Prompts</a></li>
-                    <li><a href="../index.html#research">Research</a></li>
-                    <li><a href="../index.html#projects">Projects</a></li>
-                    <li><a href="community.html">Community Feed</a></li>
-                    <li><a href="premium_zone.html" style="background-color: #34495e; padding-left: 1.8rem;">Premium Zone</a></li>
-                    <li><a href="submit_resource.html">Submit a Resource</a></li>
+                    <li><a href="../index.html"><span class="icon">[Home]</span> Home</a></li>
+                    <li><a href="../index.html#all-tools" data-view="tools"><span class="icon">[Tools]</span> AI Tools</a></li>
+                    <li><a href="../index.html#prompts" data-view="prompts"><span class="icon">[Prompts]</span> Prompts</a></li>
+                    <li><a href="../index.html#research" data-view="research"><span class="icon">[Research]</span> Research</a></li>
+                    <li><a href="../index.html#projects" data-view="projects"><span class="icon">[Projects]</span> Projects</a></li>
+                    <li><a href="community.html"><span class="icon">[Feed]</span> Community Feed</a></li>
+                    <li><a href="premium_zone.html" class="active"><span class="icon">[Premium]</span> Premium Zone</a></li>
+                    <li><a href="submit_resource.html"><span class="icon">[Submit]</span> Submit Resource</a></li>
+                    <li><a href="profile.html" id="sidebarProfileLink"><span class="icon">[Profile]</span> My Profile</a></li>
                 </ul>
             </aside>
 
             <!-- Main Content Area -->
             <main class="main-content">
                 <header class="dashboard-header">
-                    <h1>Premium Zone</h1>
+                    <h1><span class="glowing-text">Premium Zone</span></h1>
                 </header>
 
-                <section class="premium-info">
-                    <h2>Unlock Exclusive Content</h2>
-                    <p>Upgrade to a Premium Membership to access advanced prompts, in-depth research, and exclusive AI tools tailored for complex tasks.</p>
-                    <button class="btn" id="upgradeButton">Upgrade to Premium</button>
+                <section class="premium-info content-card" style="margin-bottom: 2rem; text-align: center; background: var(--gradient-accent-secondary); color: white;">
+                    <!-- Re-styled premium-info section to be more prominent -->
+                    <h2 style="color: white; font-size: 1.8rem;">Unlock Exclusive AI Capabilities</h2>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.05rem;">
+                        Upgrade to NGC Premium for advanced prompts, in-depth research, exclusive tools, and priority access to new features.
+                    </p>
+                    <button class="btn" id="upgradeButton" style="background: var(--color-accent-primary); color: var(--color-bg-primary); margin-top: 1rem;">Upgrade to Premium Now</button>
                 </section>
 
-                <section class="premium-content-grid">
-                    <!-- Dummy Premium Content Cards -->
+                <h2 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Explore Premium Content</h2>
+                <section class="dashboard-grid" id="premiumContentGrid">
+                    <!-- Dummy Premium Content Cards - ensure they use .content-card and .premium-badge -->
                     <div class="content-card">
                         <span class="premium-badge">Premium</span>
-                        <h3>Advanced GAN Prompts</h3>
-                        <span class="card-category">Prompts</span>
-                        <p>Highly detailed prompts for generating photorealistic images with Generative Adversarial Networks.</p>
-                        <span class="card-meta">Curated: May 2025</span>
-                    </div>
-                    <div class="content-card">
-                        <span class="premium-badge">Premium</span>
-                        <h3>Deep Reinforcement Learning Toolkit</h3>
-                        <span class="card-category">AI Tools</span>
-                        <p>A specialized toolkit for developing and testing DRL agents in complex environments.</p>
-                        <span class="card-meta">Version: 1.5.0</span>
-                    </div>
-                    <div class="content-card">
-                        <span class="premium-badge">Premium</span>
-                        <h3>Quantum ML Research Analysis</h3>
-                        <span class="card-category">Research Papers</span>
-                        <p>In-depth analysis and summaries of cutting-edge research in Quantum Machine Learning.</p>
+                        <h3><a href="#">Advanced GAN Architecture Guide</a></h3>
+                        <span class="card-category">Guides & Tutorials</span>
+                        <p>Deep dive into state-of-the-art Generative Adversarial Network architectures with practical examples.</p>
+                        <div class="card-tags"><span class="tag">GAN</span><span class="tag">Deep Learning</span><span class="tag">Exclusive</span></div>
                         <span class="card-meta">Updated: May 2025</span>
                     </div>
-                    <div class="content-card locked">
-                        <!-- <span class="premium-badge">Premium</span> -->
-                         <div class="card-content">
-                            <h3>Enterprise AI Strategy Guide</h3>
-                            <span class="card-category">Guides</span>
-                            <p>A comprehensive guide for implementing AI strategies in large-scale enterprises. Requires premium access.</p>
-                            <span class="card-meta">Published: Apr 2025</span>
-                        </div>
+                    <div class="content-card">
+                        <span class="premium-badge">Premium</span>
+                        <h3><a href="#">HyperFlow: Pro AutoML Toolkit</a></h3>
+                        <span class="card-category">AI Tools</span>
+                        <p>A specialized toolkit for automated machine learning, hyperparameter optimization, and model deployment.</p>
+                        <div class="card-tags"><span class="tag">AutoML</span><span class="tag">Python</span><span class="tag">Toolkit</span></div>
+                        <span class="card-meta">Version: 2.1.0</span>
                     </div>
+                    <div class="content-card">
+                        <span class="premium-badge">Premium</span>
+                        <h3><a href="#">Quantum Entanglement in ML Models</a></h3>
+                        <span class="card-category">Research Papers</span>
+                        <p>Exclusive analysis and summaries of breakthrough research in Quantum Machine Learning applications.</p>
+                        <div class="card-tags"><span class="tag">Quantum ML</span><span class="tag">Research</span></div>
+                        <span class="card-meta">Published: May 2025</span>
+                    </div>
+                    
+                    <!-- Example of a locked card for non-premium users (JS would handle visibility of overlay) -->
+                    <div class="content-card locked"> 
+                        <h3><a href="#">Enterprise AI Strategy Blueprint</a></h3>
+                        <span class="card-category">Strategy Guides</span>
+                        <p>A comprehensive blueprint for implementing AI strategies in large-scale enterprises. Unlock with Premium.</p>
+                        <div class="card-tags"><span class="tag">Strategy</span><span class="tag">Enterprise</span></div>
+                        <span class="card-meta">Published: Apr 2025</span>
+                        <div class="locked-overlay">
+                            <div>
+                                <span class="premium-icon">[Lock Icon]</span> <!-- Replace with Lucide: lock -->
+                                <h4>Premium Content</h4>
+                                <p>Upgrade to access this resource.</p>
+                            </div>
+                        </div>
+                         <span class="premium-badge" style="opacity: 0.7;">Premium</span> <!-- Badge still visible but overlay is key -->
+                    </div>
+
                      <div class="content-card locked">
-                        <div class="card-content">
-                            <h3>Hyperparameter Optimization Suite (Premium)</h3>
-                            <span class="card-category">AI Tools</span>
-                            <p>Advanced tools for automated hyperparameter tuning for various ML models. Requires premium access.</p>
-                            <span class="card-meta">Version 2.1</span>
+                        <h3><a href="#">NeuroSynth Prompt Engineering Suite</a></h3>
+                        <span class="card-category">Prompts</span>
+                        <p>Advanced prompt engineering techniques and templates for complex LLM interactions. Unlock with Premium.</p>
+                        <div class="card-tags"><span class="tag">LLM</span><span class="tag">Prompt Engineering</span></div>
+                        <span class="card-meta">Curated: May 2025</span>
+                         <div class="locked-overlay">
+                            <div>
+                                <span class="premium-icon">[Lock Icon]</span>
+                                <h4>Premium Content</h4>
+                                <p>Upgrade to access this resource.</p>
+                            </div>
                         </div>
+                        <span class="premium-badge" style="opacity: 0.7;">Premium</span>
                     </div>
+
                      <div class="content-card">
                         <span class="premium-badge">Premium</span>
-                        <h3>Exclusive NLP Model Prompts</h3>
-                        <span class="card-category">Prompts</span>
-                        <p>Prompts designed for fine-tuning and interacting with large language models for specific industry tasks.</p>
-                        <span class="card-meta">Curated: May 2025</span>
+                        <h3><a href="#">AI Ethics & Governance Masterclass</a></h3>
+                        <span class="card-category">Courses & Tutorials</span>
+                        <p>Exclusive masterclass series on navigating the complex landscape of AI ethics and governance.</p>
+                        <div class="card-tags"><span class="tag">Ethics</span><span class="tag">Governance</span><span class="tag">Course</span></div>
+                        <span class="card-meta">Released: May 2025</span>
                     </div>
-                    <!-- More premium cards -->
                 </section>
             </main>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2025 NGC. All rights reserved.</p>
+        <p>&copy; 2025 NGC. Pioneering the Future of AI Collaboration.</p>
     </footer>
 
-    <script src="../js/app.js"></script>
+    <script src="../js/app.js"></script> <!-- Global app script for auth UI and hamburger -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const upgradeButton = document.getElementById('upgradeButton');
             if (upgradeButton) {
                 upgradeButton.addEventListener('click', () => {
-                    alert('Premium membership sign-up page to be implemented!');
-                    // Example: window.location.href = 'signup.html?plan=premium';
+                    // Redirect to a dedicated subscription page or open a payment modal
+                    alert('Redirecting to subscription page (to be implemented)!');
+                    // Example: window.location.href = 'subscribe.html'; 
+                    // Or, if using a payment modal integrated with Stripe/PayPal:
+                    // openPaymentModal();
                 });
             }
-             // Placeholder for auth button on this page
-            const authButtonPage = document.getElementById('authButton');
-            if(authButtonPage) {
-                authButtonPage.addEventListener('click', () => {
-                    alert('Redirecting to Login/Sign Up page...');
-                    // window.location.href = 'login.html';
-                });
+
+            // Logic to show/hide locked overlay based on user's premium status
+            // This is a simplified example. In a real app, `currentUser` would be reliably set by app.js
+            const localCurrentUserString = localStorage.getItem('ngcUser');
+            let isUserPremium = false;
+            if (localCurrentUserString) {
+                try {
+                    const user = JSON.parse(localCurrentUserString);
+                    isUserPremium = user.isPremium === true;
+                } catch(e) { console.error("Error parsing user data from localStorage", e); }
             }
+
+            const lockedCards = document.querySelectorAll('.content-card.locked');
+            lockedCards.forEach(card => {
+                const overlay = card.querySelector('.locked-overlay');
+                if (overlay) {
+                    if (isUserPremium) {
+                        // If user is premium, ideally the "locked" class wouldn't be there from server-side rendering
+                        // or the content would be fully available. For client-side demo, hide overlay.
+                        card.classList.remove('locked'); // Allow access
+                        overlay.style.display = 'none';
+                    } else {
+                        // Ensure overlay is visible for non-premium users
+                        overlay.style.display = 'flex'; 
+                    }
+                }
+            });
         });
     </script>
 </body>

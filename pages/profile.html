@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - NGC</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+    <!-- Inline styles removed -->
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="../assets/NGC_logo.png" alt="NGC Logo" class="logo">
+                    <span class="brand-name glowing-text">NGC</span>
+                </a>
+            </div>
+            <div class="nav-middle">
+                <input type="search" class="smart-search-bar" placeholder="AI Search: What do you want to build today?">
+            </div>
+            <div class="nav-right">
+                <!-- Auth state handled by js/app.js -->
+            </div>
+        </nav>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <ul class="sidebar-nav-list">
+                    <li><a href="../index.html"><span class="icon">[Home]</span> Home</a></li>
+                    <li><a href="../index.html#all-tools" data-view="tools"><span class="icon">[Tools]</span> AI Tools</a></li>
+                    <li><a href="../index.html#prompts" data-view="prompts"><span class="icon">[Prompts]</span> Prompts</a></li>
+                    <li><a href="../index.html#research" data-view="research"><span class="icon">[Research]</span> Research</a></li>
+                    <li><a href="../index.html#projects" data-view="projects"><span class="icon">[Projects]</span> Projects</a></li>
+                    <li><a href="community.html"><span class="icon">[Feed]</span> Community Feed</a></li>
+                    <li><a href="premium_zone.html"><span class="icon">[Premium]</span> Premium Zone</a></li>
+                    <li><a href="submit_resource.html"><span class="icon">[Submit]</span> Submit Resource</a></li>
+                    <li><a href="profile.html" class="active" id="sidebarProfileLink"><span class="icon">[Profile]</span> My Profile</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <h1>User Profile</h1>
+                </header>
+
+                <div class="profile-container"> <!-- This class is styled in style.css -->
+                    <div id="profileMessage" style="text-align: center; margin-bottom: 1.5rem; font-size: 0.95rem;"></div>
+                    
+                    <div class="profile-details" id="profileDetailsContainer">
+                        <h2>Account Information</h2>
+                        <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
+                        <p><strong>Email:</strong> <span id="profileEmail">Loading...</span></p>
+                        <p><strong>Joined:</strong> <span id="profileJoinedAt">Loading...</span></p>
+                        <p><strong>Membership:</strong> <span id="profileMembership">Loading...</span></p>
+                        <p><strong>Role:</strong> <span id="profileRole">Loading...</span></p>
+                    </div>
+
+                    <div class="edit-profile-form" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--glass-border-color);">
+                        <h2>Edit Your Profile</h2>
+                        <form id="editProfileForm">
+                            <div class="form-group">
+                                <label for="editName">Full Name</label>
+                                <input type="text" id="editName" name="editName" placeholder="Your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="editEmail">Email Address</label>
+                                <input type="email" id="editEmail" name="editEmail" placeholder="your.email@example.com">
+                            </div>
+                            <!-- Consider adding password change section here -->
+                            <!-- 
+                            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Change Password</h3>
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter current password">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password (min. 8 characters)">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmNewPassword">Confirm New Password</label>
+                                <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Re-enter new password">
+                            </div>
+                             -->
+                            <button type="submit" class="btn">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 NGC. Pioneering the Future of AI Collaboration.</p>
+    </footer>
+
+    <script src="../js/app.js"></script> <!-- Global app script for auth UI and hamburger -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_BASE_URL = 'http://localhost:5001/api/v1';
+            const token = localStorage.getItem('authToken');
+            let pageScopeCurrentUser = null; 
+            try {
+                pageScopeCurrentUser = JSON.parse(localStorage.getItem('ngcUser'));
+            } catch(e) { console.error("Error parsing ngcUser from localStorage", e); }
+
+
+            const profileNameSpan = document.getElementById('profileName');
+            const profileEmailSpan = document.getElementById('profileEmail');
+            const profileJoinedAtSpan = document.getElementById('profileJoinedAt');
+            const profileMembershipSpan = document.getElementById('profileMembership');
+            const profileRoleSpan = document.getElementById('profileRole');
+            
+            const editProfileForm = document.getElementById('editProfileForm');
+            const editNameInput = document.getElementById('editName');
+            const editEmailInput = document.getElementById('editEmail');
+            const profileMessage = document.getElementById('profileMessage');
+            const profileDetailsContainer = document.getElementById('profileDetailsContainer');
+
+
+            if (!token || !pageScopeCurrentUser) {
+                if(profileMessage) {
+                    profileMessage.textContent = 'Access Denied. Please login to view your profile.';
+                    profileMessage.style.color = 'var(--color-accent-highlight)';
+                }
+                if(profileDetailsContainer) profileDetailsContainer.style.display = 'none';
+                if(editProfileForm) editProfileForm.style.display = 'none';
+                
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2500);
+                return;
+            }
+
+            async function fetchUserProfile() {
+                if (!profileMessage) return; // Ensure message container exists
+                profileMessage.textContent = 'Loading profile...';
+                profileMessage.style.color = 'var(--color-text-secondary)';
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+                        method: 'GET',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    const result = await response.json();
+                    profileMessage.textContent = ''; // Clear loading message
+
+                    if (response.ok && result.success) {
+                        const user = result.data;
+                        pageScopeCurrentUser = user; 
+                        localStorage.setItem('ngcUser', JSON.stringify(user)); 
+
+                        if(profileNameSpan) profileNameSpan.textContent = user.name;
+                        if(profileEmailSpan) profileEmailSpan.textContent = user.email;
+                        if(profileJoinedAtSpan) profileJoinedAtSpan.textContent = new Date(user.joinedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                        if(profileMembershipSpan) profileMembershipSpan.textContent = user.isPremium ? 'Premium Member' : 'Standard Member';
+                        if(profileRoleSpan) profileRoleSpan.textContent = user.role.charAt(0).toUpperCase() + user.role.slice(1);
+
+                        if(editNameInput) editNameInput.value = user.name;
+                        if(editEmailInput) editEmailInput.value = user.email;
+
+                    } else {
+                        profileMessage.textContent = result.error || result.message || 'Failed to load profile data.';
+                        profileMessage.style.color = 'var(--color-accent-highlight)';
+                    }
+                } catch (error) {
+                    console.error('Error fetching profile:', error);
+                    profileMessage.textContent = 'An error occurred while fetching your profile.';
+                    profileMessage.style.color = 'var(--color-accent-highlight)';
+                }
+            }
+
+            if (editProfileForm) {
+                editProfileForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    if (!profileMessage) return;
+                    profileMessage.textContent = '';
+
+                    const updatedData = {
+                        name: editNameInput.value.trim(),
+                        email: editEmailInput.value.trim()
+                    };
+
+                    if (!updatedData.name || !updatedData.email) {
+                        profileMessage.textContent = 'Name and Email cannot be empty.';
+                        profileMessage.style.color = 'var(--color-accent-highlight)';
+                        return;
+                    }
+                    
+                    const submitButton = editProfileForm.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.textContent;
+                    submitButton.textContent = 'Saving...';
+                    submitButton.disabled = true;
+
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/auth/update-profile`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(updatedData)
+                        });
+                        const result = await response.json();
+
+                        if (response.ok && result.success) {
+                            profileMessage.textContent = 'Profile updated successfully!';
+                            profileMessage.style.color = 'var(--color-accent-primary)';
+                            fetchUserProfile(); // Refresh profile details
+                            // Manually trigger auth UI update in app.js if it's listening for custom events
+                            // window.dispatchEvent(new CustomEvent('authChange')); 
+                        } else {
+                            profileMessage.textContent = result.error || result.message || 'Failed to update profile.';
+                            profileMessage.style.color = 'var(--color-accent-highlight)';
+                        }
+                    } catch (error) {
+                        console.error('Error updating profile:', error);
+                        profileMessage.textContent = 'An error occurred while updating your profile.';
+                        profileMessage.style.color = 'var(--color-accent-highlight)';
+                    } finally {
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+                    }
+                });
+            }
+            
+            fetchUserProfile();
+        });
+    </script>
+</body>
+</html>

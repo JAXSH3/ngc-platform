@@ -3,137 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - NGC</title>
+    <title>Create Account - NGC</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
-    <style>
-        .auth-page-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 60px); /* Full height minus top-nav */
-            padding: 2rem;
-            background-color: #f4f7f9;
-        }
-        .auth-form-wrapper {
-            background-color: #fff;
-            padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 450px; /* Slightly wider for more fields */
-        }
-        .auth-form-wrapper h1 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
-            font-size: 1.8rem;
-        }
-        .social-login-divider {
-            text-align: center;
-            margin: 1.5rem 0;
-            color: #777;
-            position: relative;
-        }
-        .social-login-divider::before,
-        .social-login-divider::after {
-            content: '';
-            display: block;
-            width: 40%;
-            height: 1px;
-            background-color: #ccc;
-            position: absolute;
-            top: 50%;
-        }
-        .social-login-divider::before {
-            left: 0;
-        }
-        .social-login-divider::after {
-            right: 0;
-        }
-        .btn-google {
-            background-color: #db4437;
-            color: white;
-            width: 100%;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        .btn-google:hover {
-            background-color: #c23321;
-        }
-        .btn-google svg {
-            width: 18px;
-            height: 18px;
-        }
-        .form-footer-text {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-        }
-        .form-group.checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .form-group.checkbox-group input[type="checkbox"] {
-            width: auto;
-        }
-        .form-group.checkbox-group label {
-            margin-bottom: 0;
-            font-weight: normal;
-        }
-    </style>
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <!-- Simplified Top Nav for Auth Pages -->
-    <nav class="top-nav">
-        <div class="nav-left">
-            <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
-                <img src="../assets/logo.png" alt="NGC Logo" class="logo">
-                <span class="brand-name">NGC</span>
-            </a>
-        </div>
-    </nav>
+    <div class="app-container auth-page-container">
+        
+        <nav class="top-nav" style="position: absolute; top: 0; background: transparent; box-shadow: none; border-bottom: none;">
+            <div class="nav-left">
+                <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="../assets/NGC_logo.png" alt="NGC Logo" class="logo">
+                    <span class="brand-name glowing-text">NGC</span>
+                </a>
+            </div>
+        </nav>
 
-    <div class="auth-page-container">
         <div class="auth-form-wrapper">
-            <h1>Create an Account</h1>
+            <h1>Join the NGC Community</h1>
+            <p style="text-align: center; color: var(--color-text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">Create your account to explore the future of AI.</p>
+            <div id="messageContainer" style="text-align: center; margin-bottom: 1.5rem; font-size: 0.9rem;"></div>
             <form id="signupForm">
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" required>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" required placeholder="you@example.com">
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required minlength="8">
+                    <label for="password">Password (min. 8 characters)</label>
+                    <input type="password" id="password" name="password" required minlength="8" placeholder="Create a strong password">
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Re-enter your password">
                 </div>
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>.</label>
+                <div class="form-group checkbox-group" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <input type="checkbox" id="terms" name="terms" required style="width: auto; height: auto; margin-right: 0.5rem;">
+                    <label for="terms" style="font-weight: normal; font-size: 0.85rem; color: var(--color-text-secondary); margin-bottom:0;">
+                        I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>.
+                    </label>
                 </div>
-                <button type="submit" class="btn" style="width: 100%;">Sign Up</button>
+                <button type="submit" class="btn" style="width: 100%;">Create My Account</button>
             </form>
 
-            <div class="social-login-divider">OR</div>
+            <div class="social-login-divider">OR SIGN UP WITH</div>
 
-            <button class="btn btn-google" id="googleSignupBtn">
-                 <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>
-                Sign Up with Google
+            <button class="btn btn-google" id="googleSignupBtn" style="width: 100%;">
+                <span class="icon">[G]</span> Sign Up with Google
             </button>
 
-            <p class="form-footer-text">
-                Already have an account? <a href="login.html">Login</a>
+            <p class="form-footer-text" style="margin-top: 2rem;">
+                Already have an account? <a href="login.html">Login Here</a>
             </p>
         </div>
     </div>
@@ -141,31 +65,77 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const signupForm = document.getElementById('signupForm');
+            const messageContainer = document.getElementById('messageContainer');
+
             if (signupForm) {
-                signupForm.addEventListener('submit', (event) => {
+                signupForm.addEventListener('submit', async (event) => {
                     event.preventDefault();
+                    messageContainer.textContent = '';
+                    messageContainer.style.color = 'var(--color-accent-highlight)'; // Default error color
+
+                    const fullName = document.getElementById('fullName').value;
+                    const email = document.getElementById('email').value;
                     const password = document.getElementById('password').value;
                     const confirmPassword = document.getElementById('confirmPassword').value;
+                    const terms = document.getElementById('terms').checked;
 
-                    if (password !== confirmPassword) {
-                        alert('Passwords do not match!');
+                    if (!fullName || !email || !password || !confirmPassword) {
+                        messageContainer.textContent = 'Please fill out all required fields.';
                         return;
                     }
-                    // Placeholder for signup logic
-                    alert('Sign up functionality to be implemented. Account created (simulated). Redirecting to login.');
-                     // Simulate successful signup:
-                    // localStorage.setItem('isLoggedIn', 'true'); // Or just redirect to login
-                    window.location.href = 'login.html';
+                    if (password !== confirmPassword) {
+                        messageContainer.textContent = 'Passwords do not match!';
+                        return;
+                    }
+                    if (password.length < 8) {
+                        messageContainer.textContent = 'Password must be at least 8 characters long.';
+                        return;
+                    }
+                    if (!terms) {
+                        messageContainer.textContent = 'You must agree to the Terms of Service and Privacy Policy.';
+                        return;
+                    }
+                    
+                    const submitButton = signupForm.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.textContent;
+                    submitButton.textContent = 'Creating Account...';
+                    submitButton.disabled = true;
+
+                    try {
+                        const response = await fetch('http://localhost:5001/api/v1/auth/signup', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ name: fullName, email, password }),
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            messageContainer.style.color = 'var(--color-accent-primary)'; // Success color
+                            messageContainer.textContent = 'Signup successful! Redirecting to login...';
+                            setTimeout(() => {
+                                window.location.href = 'login.html';
+                            }, 2000);
+                        } else {
+                            messageContainer.textContent = data.error || data.message || 'Signup failed. Please try again.';
+                        }
+                    } catch (error) {
+                        console.error('Signup error:', error);
+                        messageContainer.textContent = 'An error occurred. Please try again later.';
+                    } finally {
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+                    }
                 });
             }
 
             const googleSignupBtn = document.getElementById('googleSignupBtn');
             if (googleSignupBtn) {
                 googleSignupBtn.addEventListener('click', () => {
-                    alert('Google Sign Up functionality to be implemented.');
-                    // Simulate successful signup:
-                    // localStorage.setItem('isLoggedIn', 'true');
-                    // window.location.href = '../index.html'; // Or login page
+                    messageContainer.textContent = 'Google Sign Up functionality to be implemented.';
+                    messageContainer.style.color = 'var(--color-accent-info)';
                 });
             }
         });

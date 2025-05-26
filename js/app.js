@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryFilter = document.getElementById('category-filter');
     const sortFilter = document.getElementById('sort-filter');
     const authButton = document.getElementById('authButton');
-    // const profileIcon = document.querySelector('.profile-icon'); // For later use
+    const navRight = document.querySelector('.nav-right'); // Get the container for auth button/profile
+    let currentUser = null;
 
     // Dummy data for content cards
     const dummyData = [
@@ -63,54 +64,154 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initial render
-    filterAndSortData();
+    if (dashboardGrid) filterAndSortData(); // Only if on dashboard page
 
     // Event listeners for filters
     if (categoryFilter) categoryFilter.addEventListener('change', filterAndSortData);
     if (sortFilter) sortFilter.addEventListener('change', filterAndSortData);
 
-    // Auth button functionality (placeholder)
-    if (authButton) {
-        authButton.addEventListener('click', () => {
-            // This would typically redirect to a login/signup page or open a modal
-            alert('Login/Sign Up functionality to be implemented!');
-            // Example: window.location.href = 'pages/login.html';
-        });
-    }
-
-    // Hamburger menu functionality
-    const hamburgerMenu = document.createElement('div');
-    hamburgerMenu.className = 'hamburger-menu';
-    hamburgerMenu.innerHTML = '&#9776;'; // Hamburger icon
-    const topNav = document.querySelector('.top-nav');
-    const sidebar = document.querySelector('.sidebar');
-
-    if (topNav && sidebar) {
-        // Check if screen width is appropriate for hamburger menu
-        if (window.innerWidth <= 768) {
-            topNav.appendChild(hamburgerMenu);
-        }
-
-        hamburgerMenu.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-
-        // Hide hamburger on larger screens and ensure sidebar is visible
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                sidebar.classList.remove('active');
-                if (topNav.contains(hamburgerMenu)) {
-                    // topNav.removeChild(hamburgerMenu); // Optionally remove it
+    function updateAuthUI() {
+        const token = localStorage.getItem('authToken');
+        const userString = localStorage.getItem('ngcUser');
+        
+        if (token && userString) {
+            currentUser = JSON.parse(userString);
+            if (navRight) {
+                navRight.innerHTML = `
+                    <span class="user-greeting">Hi, ${currentUser.name.split(' ')[0]}!</span>
+                    <img src="${window.location.pathname.includes('/pages/') ? '../assets/profile-icon-placeholder.png' : 'assets/profile-icon-placeholder.png'}" alt="${currentUser.name}" class="profile-icon" id="profileLink">
+                    <button class="auth-button" id="logoutButton">Logout</button>
+                `;
+                // Add event listener for new logout button
+                const logoutButton = document.getElementById('logoutButton');
+                if (logoutButton) {
+                    logoutButton.addEventListener('click', () => {
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('ngcUser');
+                        currentUser = null;
+                        updateAuthUI(); // Re-render auth elements
+                        if(window.location.pathname.includes('/pages/') || window.location.pathname.includes('/index.html') || window.location.pathname.endsWith('/ngc-platform/') || window.location.pathname.endsWith('/')){
+                             window.location.href = window.location.pathname.includes('/pages/') ? 'login.html' : 'pages/login.html';
+                        }
+                    });
                 }
-                sidebar.style.display = ''; // Reset display for CSS to take over
-            } else {
-                if (!topNav.contains(hamburgerMenu)) {
-                    // topNav.appendChild(hamburgerMenu); // Add it back if not present
-                }
-                if (!sidebar.classList.contains('active')) {
-                     sidebar.style.display = 'none'; // Ensure it's hidden if not active
+                const profileLink = document.getElementById('profileLink');
+                if (profileLink) {
+                    profileLink.addEventListener('click', () => {
+                        // Navigate to the profile page
+                        window.location.href = window.location.pathname.includes('/pages/') ? 'profile.html' : 'pages/profile.html';
+                    });
                 }
             }
+        } else {
+            currentUser = null;
+            if (navRight) {
+                navRight.innerHTML = `
+                    <button class="auth-button" id="authButton">Login / Sign Up</button>
+                `;
+                // Add event listener for new auth button
+                const newAuthButton = document.getElementById('authButton');
+                if (newAuthButton) {
+                    newAuthButton.addEventListener('click', () => {
+                         // Adjust path based on current page
+                        if(window.location.pathname.includes('/pages/')){
+                            window.location.href = 'login.html';
+                        } else {
+                            window.location.href = 'pages/login.html';
+                        }
+                    });
+                }
+            }
+        }
+    }
+    
+    updateAuthUI(); // Call on initial load
+
+    // New Hamburger menu functionality
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content'); // Or a more specific content wrapper
+    let hamburgerMenu = document.querySelector('.hamburger-menu'); // Check if already in HTML
+
+    if (!hamburgerMenu && navRight) { // If not in HTML, create and append to nav-right
+        hamburgerMenu = document.createElement('div');
+        hamburgerMenu.className = 'hamburger-menu';
+        hamburgerMenu.innerHTML = '&#9776;'; // Hamburger icon
+        // navRight.appendChild(hamburgerMenu); // Appending it here might conflict with authUI updates
+        // Better to ensure it's part of the initial HTML in nav-right or prepend it
+    }
+    
+    // Function to create and manage hamburger if not present in HTML
+    function ensureHamburgerMenu() {
+        if (!navRight) return;
+        let ham = navRight.querySelector('.hamburger-menu');
+        if (window.innerWidth <= 768) {
+            if (!ham) {
+                ham = document.createElement('div');
+                ham.className = 'hamburger-menu';
+                ham.innerHTML = '&#9776;';
+                navRight.insertBefore(ham, navRight.firstChild); // Add as first child of nav-right
+                ham.addEventListener('click', () => {
+                    if (sidebar) sidebar.classList.toggle('active');
+                    // if (mainContent) mainContent.classList.toggle('sidebar-active'); // Optional push/overlay effect
+                });
+            }
+            ham.style.display = 'block';
+        } else {
+            if (ham) ham.style.display = 'none';
+            if (sidebar) sidebar.classList.remove('active'); // Ensure sidebar is closed on larger screens
+            // if (mainContent) mainContent.classList.remove('sidebar-active');
+        }
+    }
+
+    if (sidebar) { // Only proceed if a sidebar exists on the page
+        ensureHamburgerMenu(); // Call on load
+        window.addEventListener('resize', ensureHamburgerMenu); // Call on resize
+    }
+    
+    // Logic for explore dashboard button and home link (from index.html specific script)
+    // This should ideally be page-specific, but for now, ensure it doesn't break other pages.
+    const heroSection = document.getElementById('heroSection');
+    const mainDashboardLayout = document.getElementById('mainDashboardLayout');
+    const exploreDashboardBtn = document.getElementById('exploreDashboardBtn');
+    const homeLink = document.getElementById('homeLink');
+
+    function showDashboardView() {
+        if (heroSection) heroSection.style.display = 'none';
+        if (mainDashboardLayout) mainDashboardLayout.style.display = 'flex';
+        if (homeLink) homeLink.classList.add('active');
+        // Potentially update dashboard title or clear filters
+        const dashboardTitle = document.getElementById('dashboardTitle');
+        if (dashboardTitle) dashboardTitle.textContent = 'Dashboard';
+    }
+
+    function showHeroView() {
+        if (heroSection) heroSection.style.display = 'flex';
+        if (mainDashboardLayout) mainDashboardLayout.style.display = 'none';
+        if (homeLink) homeLink.classList.remove('active');
+    }
+
+    if (exploreDashboardBtn) {
+        exploreDashboardBtn.addEventListener('click', showDashboardView);
+    }
+    if (homeLink) {
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showDashboardView();
         });
     }
+    
+    // Initial view check (only if on index.html)
+    if (window.location.pathname.endsWith('/') || window.location.pathname.endsWith('index.html')) {
+        // Default to hero view, or dashboard if logged in (optional)
+        // if (localStorage.getItem('authToken')) {
+        //     showDashboardView();
+        // } else {
+        //     showHeroView();
+        // }
+        if (heroSection && mainDashboardLayout) { // Ensure elements exist before calling
+             showHeroView();
+        }
+    }
+
+
 });

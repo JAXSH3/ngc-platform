@@ -1,163 +1,210 @@
-/* Responsive Design */
+/* Responsive Design for Futuristic AI-Centric UI */
 
-/* Tablets and larger phones (e.g., iPads, larger Android phones) */
+/* Tablets and larger phones (e.g., iPads, landscape Android phones) */
 @media (max-width: 1024px) {
-    .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
-    }
-
-    .nav-middle .smart-search-bar {
-        max-width: 400px; /* Slightly smaller search bar */
-    }
-
     .sidebar {
-        width: 200px; /* Slightly narrower sidebar */
+        width: 220px;
+    }
+    .main-content {
+        margin-left: 220px;
+        padding: 1.5rem;
+    }
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+    .nav-middle .smart-search-bar {
+        max-width: 450px; /* Slightly smaller */
+        font-size: 0.9rem;
+        padding: 0.7rem 1rem;
+    }
+    .top-nav {
+        padding: 0.75rem 1.5rem;
     }
 
-    .main-content {
-        margin-left: 200px; /* Adjust for narrower sidebar */
+    .hero-section h1.glowing-text {
+        font-size: 2.8rem;
     }
+    .hero-section .subtitle {
+        font-size: 1.1rem;
+    }
+    .feature-highlights {
+        gap: 1rem; /* Reduce gap */
+    }
+    .feature-item {
+        padding: 1.25rem;
+    }
+    .feature-item h4 { font-size: 1rem; }
+    .feature-item p { font-size: 0.8rem; }
+
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
 }
 
-/* Smaller tablets and landscape phones */
+/* Smaller tablets and landscape phones - Major layout changes */
 @media (max-width: 768px) {
     .top-nav {
-        padding: 0.5rem 1rem; /* Reduced padding */
-        height: auto; /* Allow height to adjust */
-        flex-direction: column; /* Stack items vertically */
-        align-items: flex-start; /* Align to left */
-        position: relative; /* Change from fixed for hamburger menu flow */
+        padding: 0.6rem 1rem;
+        height: 60px; /* Maintain fixed height for hamburger alignment */
+    }
+    .nav-left .brand-name.glowing-text {
+        font-size: 1.5rem;
+    }
+    .nav-left .logo {
+        height: 30px;
     }
 
-    .nav-left {
-        margin-bottom: 0.5rem;
+    .nav-middle { /* Search bar might be hidden by default, toggled by an icon */
+        display: none; /* Hide by default, JS can toggle with an icon */
+        /* Alternative: Keep it, but make it much smaller or part of a dropdown */
     }
-
-    .nav-middle {
+    .nav-middle.active-search { /* Class to show search bar on mobile */
+        display: flex;
+        position: absolute;
+        top: 60px; /* Below nav */
+        left: 0;
+        right: 0;
         width: 100%;
-        padding: 0 0 0.5rem 0; /* Adjust padding */
-        justify-content: flex-start;
+        padding: 0.75rem;
+        background: var(--color-bg-glass-strong);
+        backdrop-filter: var(--glass-blur-value); /* Corrected: Re-apply if needed */
+        box-shadow: var(--shadow-depth-sm);
+        z-index: 998; /* Below main nav but above content */
+    }
+    .smart-search-bar { /* When shown in .active-search */
+        max-width: none;
     }
 
-    .smart-search-bar {
-        width: 100%;
-        max-width: none; /* Full width */
-    }
 
-    .nav-right {
-        width: 100%;
-        justify-content: flex-end; /* Align button to right */
-        padding-top: 0.5rem;
-        border-top: 1px solid #eee;
+    /* Hamburger Menu Icon - Ensure it's styled and positioned */
+    .hamburger-menu {
+        display: flex; /* Use flex for alignment if needed */
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: var(--color-accent-primary);
+        cursor: pointer;
+        padding: 0.5rem;
+        background: transparent;
+        border: none;
+        order: 3; /* If nav-right items are flex, to position it last */
+        z-index: 1002; /* Above sidebar when closed */
     }
+    .hamburger-menu:hover {
+        color: var(--color-accent-info);
+    }
+    /* The hamburger itself is added/managed by js/app.js into .nav-right */
 
-    .main-layout {
-        margin-top: 0; /* Reset margin as top-nav is not fixed */
-        flex-direction: column; /* Stack sidebar and content */
-    }
 
     .sidebar {
-        width: 100%;
-        height: auto; /* Auto height for horizontal layout */
-        position: static; /* No longer fixed */
-        border-bottom: 1px solid #34495e;
-        display: none; /* Hidden by default, shown by hamburger */
+        position: fixed;
+        left: -100%; /* Hidden off-screen */
+        width: 260px; /* Can be a bit wider on mobile when open */
+        height: 100vh;
+        top: 0; /* Covers full height */
+        z-index: 1001; /* Above top-nav when open */
+        transition: left var(--transition-smooth);
+        border-right: none;
+        box-shadow: 3px 0 15px rgba(0,0,0,0.4);
     }
-
     .sidebar.active {
-        display: block; /* Show when active */
+        left: 0; /* Slide in */
     }
-
     .sidebar-nav-list li a {
-        padding: 0.8rem 1rem; /* Adjust padding */
-        text-align: center;
+        padding: 1rem 1.5rem;
+        font-size: 1rem; /* Slightly larger for touch */
     }
 
     .main-content {
-        margin-left: 0; /* No sidebar margin */
-        padding: 1rem;
+        margin-left: 0; /* Full width when sidebar is hidden */
+        padding: 1.25rem;
     }
+    /* Optional: Add overlay to main content when sidebar is active */
+    .main-content-overlay {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 1000; /* Below sidebar, above content */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity var(--transition-smooth), visibility var(--transition-smooth);
+    }
+    .main-content-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
 
     .dashboard-header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
     }
-
     .dashboard-header h1 {
-        margin-bottom: 0.5rem;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 1rem;
     }
-
     .filters {
         width: 100%;
-        display: flex;
         flex-direction: column;
+        gap: 0.75rem;
     }
-
-    .filters select {
-        margin-left: 0;
-        margin-bottom: 0.5rem;
-        width: 100%;
-    }
+    .filters select { margin-left: 0; width: 100%; }
 
     .dashboard-grid {
-        grid-template-columns: 1fr; /* 1 column for smaller screens */
-        gap: 1rem;
+        grid-template-columns: 1fr; /* Single column */
+        gap: 1.25rem;
     }
 
-    /* Hamburger Menu (to be added in HTML and JS) */
-    .hamburger-menu {
-        display: block; /* Show hamburger */
-        font-size: 1.5rem;
-        cursor: pointer;
-        padding: 0.5rem;
-        color: #2c3e50;
-        position: absolute;
-        top: 15px;
-        right: 15px;
-    }
+    .hero-section { padding: 1.5rem; }
+    .hero-section h1.glowing-text { font-size: 2.2rem; }
+    .hero-section .subtitle { font-size: 1rem; }
+    .feature-highlights { flex-direction: column; align-items: center; }
+    .feature-item { flex-basis: auto; width: 90%; max-width: 350px; }
 
-    .top-nav .nav-left .brand-name {
-        font-size: 1.3rem;
+
+    .auth-form-wrapper {
+        padding: 2rem;
+        margin: 1rem; /* Ensure it doesn't touch edges */
+        max-width: calc(100% - 2rem); /* Max width with padding */
     }
-    .top-nav .logo {
-        height: 30px;
-    }
+    .auth-form-wrapper h1 { font-size: 1.8rem; }
 }
 
 /* Mobile phones */
 @media (max-width: 480px) {
-    .brand-name {
-        font-size: 1.2rem; /* Smaller brand name */
-    }
+    .top-nav { padding: 0.5rem 0.75rem; height: 55px; }
+    .nav-left .brand-name.glowing-text { font-size: 1.3rem; }
+    .nav-left .logo { height: 28px; }
+    .hamburger-menu { font-size: 1.6rem; padding: 0.4rem; }
 
-    .logo {
-        height: 30px;
-    }
+    .sidebar { width: 240px; } /* Slightly narrower */
 
-    .auth-button {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-    }
+    .main-content { padding: 1rem; }
+    .content-card { padding: 1.25rem; border-radius: var(--border-radius-lg); } /* Slightly smaller rounding */
+    .content-card h3 { font-size: 1.1rem; }
+    .content-card p { font-size: 0.85rem; }
 
-    .content-card {
-        padding: 1rem;
-    }
+    .dashboard-header h1 { font-size: 1.7rem; }
+    .filters select { padding: 0.6rem 0.8rem; font-size: 0.85rem; }
 
-    .content-card h3 {
-        font-size: 1.1rem;
-    }
+    .hero-section { padding: 1rem; }
+    .hero-section h1.glowing-text { font-size: 1.9rem; }
+    .hero-section .subtitle { font-size: 0.95rem; }
+    .hero-section .cta-button { padding: 0.75rem 1.8rem; font-size: 0.95rem; }
+    .feature-item { width: 95%; }
 
-    .page-container {
-        padding: 1rem;
+    .auth-form-wrapper { padding: 1.5rem; }
+    .auth-form-wrapper h1 { font-size: 1.6rem; }
+    .form-group input, .form-group textarea, .form-group select {
+        padding: 0.75rem 1rem; font-size: 0.9rem;
     }
+    .btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
 
-    .top-nav {
-        /* Ensure hamburger is visible if not already handled */
-    }
-
-    .hamburger-menu {
-        top: 12px; /* Adjust position if needed */
-        right: 12px;
-        font-size: 1.4rem;
-    }
+    /* Community Feed adjustments */
+    .community-feed .post-form, .community-feed .feed-post { padding: 1rem; }
+    .community-feed .post-actions { gap: 0.5rem; /* Tighter gap */ }
+    .community-feed .post-actions button { font-size: 0.8rem; padding: 0.4rem; }
+    .community-feed .post-header .username { font-size: 0.9rem; }
+    .community-feed .post-header .post-time { font-size: 0.75rem; }
 }

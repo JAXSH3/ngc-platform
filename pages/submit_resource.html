@@ -6,68 +6,8 @@
     <title>Submit a Resource - NGC</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
-    <style>
-        .submission-form-container {
-            max-width: 700px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .submission-form-container h1 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #2c3e50;
-        }
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
-        }
-        .form-group input[type="text"],
-        .form-group input[type="url"],
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 0.95rem;
-        }
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        .form-group input[type="file"] {
-            padding: 0.5rem;
-        }
-        .form-actions {
-            text-align: right;
-            margin-top: 1.5rem;
-        }
-        .form-guidelines {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-radius: 4px;
-            border: 1px solid #e0e0e0;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-        }
-        .form-guidelines h3 {
-            margin-top: 0;
-            font-size: 1.1rem;
-        }
-        .form-guidelines ul {
-            padding-left: 1.2rem;
-            margin-bottom: 0;
-        }
-    </style>
+    <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+    <!-- Inline styles removed -->
 </head>
 <body>
     <div class="app-container">
@@ -75,15 +15,15 @@
         <nav class="top-nav">
             <div class="nav-left">
                 <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
-                    <img src="../assets/logo.png" alt="NGC Logo" class="logo">
-                    <span class="brand-name">NGC</span>
+                    <img src="../assets/NGC_logo.png" alt="NGC Logo" class="logo">
+                    <span class="brand-name glowing-text">NGC</span>
                 </a>
             </div>
             <div class="nav-middle">
-                <input type="search" class="smart-search-bar" placeholder="Search AI tools, prompts, research...">
+                <input type="search" class="smart-search-bar" placeholder="AI Search: What do you want to build today?">
             </div>
             <div class="nav-right">
-                <button class="auth-button" id="authButton">Login / Sign Up</button>
+                <!-- Auth state handled by js/app.js -->
             </div>
         </nav>
 
@@ -91,35 +31,44 @@
             <!-- Sidebar Navigation -->
             <aside class="sidebar">
                 <ul class="sidebar-nav-list">
-                    <li><a href="../index.html#all-tools">All Tools</a></li>
-                    <li><a href="../index.html#prompts">Prompts</a></li>
-                    <li><a href="../index.html#research">Research</a></li>
-                    <li><a href="../index.html#projects">Projects</a></li>
-                    <li><a href="community.html">Community Feed</a></li>
-                    <li><a href="premium_zone.html">Premium Zone</a></li>
-                    <li><a href="submit_resource.html" style="background-color: #34495e; padding-left: 1.8rem;">Submit a Resource</a></li>
+                    <li><a href="../index.html"><span class="icon">[Home]</span> Home</a></li>
+                    <li><a href="../index.html#all-tools" data-view="tools"><span class="icon">[Tools]</span> AI Tools</a></li>
+                    <li><a href="../index.html#prompts" data-view="prompts"><span class="icon">[Prompts]</span> Prompts</a></li>
+                    <li><a href="../index.html#research" data-view="research"><span class="icon">[Research]</span> Research</a></li>
+                    <li><a href="../index.html#projects" data-view="projects"><span class="icon">[Projects]</span> Projects</a></li>
+                    <li><a href="community.html"><span class="icon">[Feed]</span> Community Feed</a></li>
+                    <li><a href="premium_zone.html"><span class="icon">[Premium]</span> Premium Zone</a></li>
+                    <li><a href="submit_resource.html" class="active"><span class="icon">[Submit]</span> Submit Resource</a></li>
+                    <li><a href="profile.html" id="sidebarProfileLink"><span class="icon">[Profile]</span> My Profile</a></li>
                 </ul>
             </aside>
 
             <!-- Main Content Area -->
             <main class="main-content">
-                <div class="submission-form-container">
-                    <h1>Submit a Resource</h1>
+                <header class="dashboard-header">
+                    <h1>Submit a New Resource</h1>
+                </header>
 
-                    <div class="form-guidelines">
-                        <h3>Submission Guidelines</h3>
-                        <ul>
+                <div class="submission-form-container content-card" style="max-width: 800px; margin: 0 auto;"> <!-- Applied .content-card for consistent styling -->
+                    <p style="text-align:center; margin-bottom: 1rem; color: var(--color-text-secondary);">Share valuable AI tools, projects, research, or prompts with the NGC community.</p>
+                    
+                    <div class="form-guidelines" style="background-color: rgba(255,255,255,0.03); border: 1px solid var(--glass-border-color); padding: 1rem; border-radius: var(--border-radius-base); margin-bottom: 2rem; font-size: 0.9rem;">
+                        <h3 style="color: var(--color-accent-primary); margin-bottom: 0.75rem;">Submission Guidelines</h3>
+                        <ul style="list-style-type: disc; padding-left: 1.2rem; color: var(--color-text-secondary);">
                             <li>Ensure the resource is relevant to AI, Data Science, Machine Learning, or Generative AI.</li>
-                            <li>Provide accurate and clear information.</li>
+                            <li>Provide accurate and clear information. Links should be direct and functional.</li>
                             <li>If submitting a tool or project, include a link to its primary source (e.g., GitHub, official website).</li>
-                            <li>Submissions will be reviewed before appearing on the platform.</li>
+                            <li>Submissions are reviewed by our team before appearing on the platform.</li>
+                            <li>You must be logged in to submit a resource.</li>
                         </ul>
                     </div>
+                    
+                    <div id="submitMessage" style="text-align: center; margin-bottom: 1.5rem; font-size: 0.95rem;"></div>
 
                     <form id="resourceSubmissionForm">
                         <div class="form-group">
                             <label for="resource-title">Title / Name of Resource</label>
-                            <input type="text" id="resource-title" name="resourceTitle" required>
+                            <input type="text" id="resource-title" name="resourceTitle" required placeholder="e.g., Awesome AI Toolkit v2">
                         </div>
 
                         <div class="form-group">
@@ -131,38 +80,41 @@
                                 <option value="research-paper">Research Paper / Article</option>
                                 <option value="project">Project / Code Repository</option>
                                 <option value="guide">Guide / Tutorial</option>
+                                <option value="dataset">Dataset</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="resource-description">Description</label>
-                            <textarea id="resource-description" name="resourceDescription" rows="4" required></textarea>
+                            <label for="resource-description">Description (Markdown supported for basic formatting)</label>
+                            <textarea id="resource-description" name="resourceDescription" rows="5" required placeholder="Provide a clear and concise description of the resource..."></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label for="resource-link">Link to Resource (URL)</label>
-                            <input type="url" id="resource-link" name="resourceLink" placeholder="https://example.com" required>
+                            <label for="resource-link">Primary Link to Resource (URL)</label>
+                            <input type="url" id="resource-link" name="resourceLink" placeholder="https://example.com/resource" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="resource-tags">Tags / Keywords (comma-separated)</label>
-                            <input type="text" id="resource-tags" name="resourceTags" placeholder="e.g., NLP, image generation, python">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="submitter-email">Your Email (for verification, not displayed publicly)</label>
-                            <input type="email" id="submitter-email" name="submitterEmail" required>
+                            <label for="resource-tags">Tags / Keywords (comma-separated, max 5)</label>
+                            <input type="text" id="resource-tags" name="resourceTags" placeholder="e.g., NLP, image generation, python, open-source">
                         </div>
                         
                         <div class="form-group">
-                             <label for="resource-file">Optional: Upload supporting file (e.g., preview image, PDF)</label>
-                             <input type="file" id="resource-file" name="resourceFile">
+                             <label for="resource-file">Optional: Cover Image URL (e.g., for a preview)</label>
+                             <input type="url" id="resource-image-url" name="resourceImageUrl" placeholder="https://example.com/image.png">
+                        </div>
+                        
+                        <div class="form-group checkbox-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                             <input type="checkbox" id="isPremiumResource" name="isPremiumResource" style="width: auto; height: auto; margin-right: 0.5rem;">
+                             <label for="isPremiumResource" style="font-weight: normal; font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom:0;">
+                                Is this a premium resource (requires NGC Premium to access)?
+                            </label>
                         </div>
 
 
-                        <div class="form-actions">
-                            <button type="submit" class="btn">Submit Resource</button>
+                        <div class="form-actions" style="text-align: right; margin-top: 2rem;">
+                            <button type="submit" class="btn">Submit Resource for Review</button>
                         </div>
                     </form>
                 </div>
@@ -171,28 +123,101 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 NGC. All rights reserved.</p>
+        <p>&copy; 2025 NGC. Pioneering the Future of AI Collaboration.</p>
     </footer>
 
-    <script src="../js/app.js"></script>
+    <script src="../js/app.js"></script> <!-- Global app script for auth UI and hamburger -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const submissionForm = document.getElementById('resourceSubmissionForm');
-            if (submissionForm) {
-                submissionForm.addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    // In a real application, you would collect form data and send it to a server.
-                    alert('Thank you for your submission! It will be reviewed shortly.');
-                    submissionForm.reset(); // Reset form after submission
-                });
+            const submitMessage = document.getElementById('submitMessage');
+            const API_BASE_URL = 'http://localhost:5001/api/v1'; // Backend API
+            let pageScopeCurrentUser = null;
+
+            try {
+                pageScopeCurrentUser = JSON.parse(localStorage.getItem('ngcUser'));
+            } catch(e) { console.error("Error parsing ngcUser from localStorage", e); }
+
+            if (!pageScopeCurrentUser) {
+                if(submitMessage) {
+                    submitMessage.textContent = 'You must be logged in to submit a resource. Redirecting to login...';
+                    submitMessage.style.color = 'var(--color-accent-highlight)';
+                }
+                if(submissionForm) submissionForm.style.display = 'none';
+                setTimeout(() => { window.location.href = 'login.html'; }, 3000);
+                return;
             }
 
-            // Placeholder for auth button on this page
-            const authButtonPage = document.getElementById('authButton');
-            if(authButtonPage) {
-                authButtonPage.addEventListener('click', () => {
-                    alert('Redirecting to Login/Sign Up page...');
-                    // window.location.href = 'login.html';
+
+            if (submissionForm) {
+                submissionForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+                    if(submitMessage) {
+                        submitMessage.textContent = '';
+                        submitMessage.style.color = 'var(--color-accent-highlight)'; // Default error
+                    }
+
+                    const title = document.getElementById('resource-title').value;
+                    const type = document.getElementById('resource-category').value; // 'type' in backend model
+                    const description = document.getElementById('resource-description').value;
+                    const url = document.getElementById('resource-link').value;
+                    const tags = document.getElementById('resource-tags').value.split(',').map(tag => tag.trim()).filter(tag => tag);
+                    // const submitterEmail = document.getElementById('submitter-email').value; // Backend gets user from token
+                    const imageUrl = document.getElementById('resource-image-url').value; // Optional
+                    const isPremium = document.getElementById('isPremiumResource').checked;
+
+
+                    if (!title || !type || !description || !url) {
+                        if(submitMessage) submitMessage.textContent = 'Please fill in all required fields (Title, Category, Description, Link).';
+                        return;
+                    }
+                    
+                    const submitButton = submissionForm.querySelector('button[type="submit"]');
+                    const originalButtonText = submitButton.textContent;
+                    submitButton.textContent = 'Submitting...';
+                    submitButton.disabled = true;
+
+                    const resourceData = {
+                        title,
+                        type, // Matches 'type' in Resource model
+                        category: type, // Using type as category for now, can be refined
+                        description,
+                        url,
+                        tags,
+                        isPremium,
+                        // createdBy will be set by backend using token
+                        // imageUrl: imageUrl, // Add if backend supports it
+                    };
+
+                    try {
+                        const token = localStorage.getItem('authToken');
+                        const response = await fetch(`${API_BASE_URL}/resources`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(resourceData)
+                        });
+                        const result = await response.json();
+
+                        if (response.ok && result.success) {
+                            if(submitMessage) {
+                                submitMessage.textContent = 'Thank you! Your resource has been submitted for review.';
+                                submitMessage.style.color = 'var(--color-accent-primary)';
+                            }
+                            submissionForm.reset();
+                        } else {
+                             if(submitMessage) submitMessage.textContent = result.error || result.message || 'Submission failed. Please try again.';
+                        }
+
+                    } catch (error) {
+                        console.error('Error submitting resource:', error);
+                        if(submitMessage) submitMessage.textContent = 'An error occurred during submission. Please try again later.';
+                    } finally {
+                        submitButton.textContent = originalButtonText;
+                        submitButton.disabled = false;
+                    }
                 });
             }
         });

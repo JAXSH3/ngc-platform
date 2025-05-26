@@ -6,70 +6,184 @@
     <title>NGC - Next Generation Community</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <!-- Favicon placeholder - replace with actual favicon e.g. assets/favicon.svg -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="app-container">
         <!-- Top Navigation Bar -->
         <nav class="top-nav">
             <div class="nav-left">
-                <img src="C:\Users\jashp\Desktop\ngc-platform\NGC_logo.png" alt="NGC Logo" class="logo">
-                <span class="brand-name">NGC</span>
+                <img src="assets/NGC_logo.png" alt="NGC Logo" class="logo"> <!-- Replace with actual futuristic SVG logo -->
+                <span class="brand-name glowing-text">NGC</span>
             </div>
             <div class="nav-middle">
-                <input type="search" class="smart-search-bar" placeholder="Search AI tools, prompts, research...">
+                <input type="search" class="smart-search-bar" placeholder="AI Search: What do you want to build today?">
             </div>
             <div class="nav-right">
-                <button class="auth-button" id="authButton">Login / Sign Up</button>
-                <!-- <img src="assets/profile-icon.png" alt="User Profile" class="profile-icon" style="display:none;"> -->
+                <!-- Auth state (Login/Signup button or User Greeting/Profile Icon) is dynamically inserted here by js/app.js -->
             </div>
         </nav>
 
-        <div class="main-layout">
-            <!-- Sidebar Navigation -->
-            <aside class="sidebar">
-                <ul class="sidebar-nav-list">
-                    <li><a href="#all-tools">All Tools</a></li>
-                    <li><a href="#prompts">Prompts</a></li>
-                    <li><a href="#research">Research</a></li>
-                    <li><a href="#projects">Projects</a>
-                    <li><a href="pages/community.html">Community Feed</a></li>
-                    <li><a href="pages/premium_zone.html">Premium Zone</a></li>
-                    <li><a href="pages/submit_resource.html">Submit a Resource</a></li>
-                </ul>
-            </aside>
+        <!-- This div will toggle between Landing Page and Dashboard View -->
+        <div id="viewContainer">
 
-            <!-- Main Content Area (Dashboard) -->
-            <main class="main-content">
-                <header class="dashboard-header">
-                    <h1>Dashboard</h1>
-                    <div class="filters">
-                        <select id="category-filter">
-                            <option value="all">All Categories</option>
-                            <option value="research">Research Papers</option>
-                            <option value="projects">Projects</option>
-                            <option value="ai-tools">AI Tools</option>
-                            <option value="prompts">Prompts</option>
-                        </select>
-                        <select id="sort-filter">
-                            <option value="trending">Trending</option>
-                            <option value="most-used">Most Used</option>
-                            <option value="recent">Recently Added</option>
-                        </select>
+            <!-- Landing Page Hero Section -->
+            <section class="hero-section" id="heroSection">
+                <!-- Placeholder for animated AI visuals / abstract neural network background -->
+                <h1 class="glowing-text">Navigate the Next Wave of Intelligence</h1>
+                <p class="subtitle">NGC is the nexus for pioneers in AI, Data Science, Machine Learning, and Generative Technologies. Discover, create, and collaborate.</p>
+                <button class="btn cta-button" id="exploreDashboardBtn">Join the Future</button>
+                
+                <div class="feature-highlights">
+                    <div class="feature-item">
+                        <span class="icon">[AI Search Icon]</span> <!-- Replace with Lucide icon: search-code, brain-circuit -->
+                        <h4>Intelligent Discovery</h4>
+                        <p>Find AI tools, prompts, and research with our advanced, AI-powered search.</p>
                     </div>
-                </header>
-                <section class="dashboard-grid" id="dashboardGrid">
-                    <!-- Content cards will be dynamically inserted here -->
-                </section>
-            </main>
+                    <div class="feature-item">
+                        <span class="icon">[Repo Icon]</span> <!-- Replace with Lucide icon: library, archive -->
+                        <h4>Curated Resource Hub</h4>
+                        <p>Access an expanding repository of cutting-edge AI tools, projects, and papers.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="icon">[Community Icon]</span> <!-- Replace with Lucide icon: users, message-square -->
+                        <h4>Dynamic Community Feed</h4>
+                        <p>Engage with experts, share insights, and fuel innovation together.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Dashboard Layout (Initially hidden if hero is shown) -->
+            <div class="main-layout" id="mainDashboardLayout" style="display: none;">
+                <aside class="sidebar">
+                    <ul class="sidebar-nav-list">
+                        <!-- Replace text icons with actual SVGs or Lucide Icons e.g. <i data-lucide="home"></i> -->
+                        <li><a href="#" id="homeLink" class="active"><span class="icon">[Home]</span> Home</a></li>
+                        <li><a href="#all-tools" data-view="tools"><span class="icon">[Tools]</span> AI Tools</a></li>
+                        <li><a href="#prompts" data-view="prompts"><span class="icon">[Prompts]</span> Prompts</a></li>
+                        <li><a href="#research" data-view="research"><span class="icon">[Research]</span> Research</a></li>
+                        <li><a href="#projects" data-view="projects"><span class="icon">[Projects]</span> Projects</a></li>
+                        <li><a href="pages/community.html"><span class="icon">[Feed]</span> Community Feed</a></li>
+                        <li><a href="pages/premium_zone.html"><span class="icon">[Premium]</span> Premium Zone</a></li>
+                        <li><a href="pages/submit_resource.html"><span class="icon">[Submit]</span> Submit Resource</a></li>
+                        <li><a href="pages/profile.html" id="sidebarProfileLink"><span class="icon">[Profile]</span> My Profile</a></li>
+                    </ul>
+                </aside>
+
+                <main class="main-content">
+                    <header class="dashboard-header">
+                        <h1 id="dashboardTitle">Dashboard</h1>
+                        <div class="filters">
+                            <select id="category-filter" aria-label="Filter by category">
+                                <option value="all">All Categories</option>
+                                <option value="research">Research Papers</option>
+                                <option value="projects">Projects</option>
+                                <option value="ai-tools">AI Tools</option>
+                                <option value="prompts">Prompts</option>
+                            </select>
+                            <select id="sort-filter" aria-label="Sort by">
+                                <option value="trending">Trending</option>
+                                <option value="most-used">Most Used</option>
+                                <option value="recent">Recently Added</option>
+                            </select>
+                        </div>
+                    </header>
+                    <section class="dashboard-grid" id="dashboardGrid">
+                        <!-- Content cards (tools, research, projects) will be dynamically inserted here by js/app.js -->
+                        <!-- Example Card Structure (for reference, JS will generate this):
+                        <div class="content-card">
+                            <h3><a href="#">Card Title</a></h3>
+                            <span class="card-category">AI Tool</span>
+                            <p>Brief description of the content. Glassmorphic effect with hover animations.</p>
+                            <div class="card-tags">
+                                <span class="tag">GenAI</span><span class="tag">Image</span>
+                            </div>
+                            <span class="card-meta">Added: 2 days ago</span>
+                            <div class="premium-badge">Premium</div> If premium 
+                        </div>
+                        -->
+                    </section>
+                </main>
+            </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2025 NGC. All rights reserved.</p>
-        <p><em>AI Assistant/Chatbot (Future Scope)</em></p>
-        <p><em>Admin Panel (Future Scope)</em></p>
+        <p>&copy; 2025 NGC. Pioneering the Future of AI Collaboration.</p>
+        <p><em>AI Assistant/Chatbot & Admin Panel (Future Scope)</em></p>
     </footer>
 
     <script src="js/app.js"></script>
+    <!-- Page-specific script for hero/dashboard toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroSection = document.getElementById('heroSection');
+            const mainDashboardLayout = document.getElementById('mainDashboardLayout');
+            const exploreDashboardBtn = document.getElementById('exploreDashboardBtn');
+            const homeLink = document.getElementById('homeLink');
+            const sidebarLinks = document.querySelectorAll('.sidebar-nav-list a[data-view]');
+            const dashboardTitle = document.getElementById('dashboardTitle');
+
+            function updateActiveSidebarLink(activeLink) {
+                document.querySelectorAll('.sidebar-nav-list a').forEach(link => link.classList.remove('active'));
+                if (activeLink) activeLink.classList.add('active');
+            }
+
+            function showDashboard(viewTarget = 'Dashboard') {
+                if (heroSection) heroSection.style.display = 'none';
+                if (mainDashboardLayout) mainDashboardLayout.style.display = 'flex';
+                
+                let activeLink = homeLink;
+                if (viewTarget !== 'Dashboard' && viewTarget !== 'Home') {
+                    const targetLink = document.querySelector(`.sidebar-nav-list a[data-view="${viewTarget}"]`);
+                    if (targetLink) activeLink = targetLink;
+                }
+                updateActiveSidebarLink(activeLink);
+                if (dashboardTitle) dashboardTitle.textContent = viewTarget.charAt(0).toUpperCase() + viewTarget.slice(1);
+                // Here, you would also trigger fetching/filtering of content for the specific view (e.g., tools, prompts)
+            }
+
+            function showHero() {
+                if (heroSection) heroSection.style.display = 'flex';
+                if (mainDashboardLayout) mainDashboardLayout.style.display = 'none';
+                updateActiveSidebarLink(null); // No active link in sidebar when hero is shown
+            }
+
+            if (exploreDashboardBtn) {
+                exploreDashboardBtn.addEventListener('click', () => showDashboard('Home'));
+            }
+            
+            if (homeLink) {
+                homeLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showDashboard('Home');
+                });
+            }
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const view = link.dataset.view;
+                    if (view) {
+                        showDashboard(view);
+                    } else if (link.id === 'sidebarProfileLink' || link.href.includes('pages/')) {
+                        // Allow navigation for external pages
+                        window.location.href = link.href;
+                    }
+                });
+            });
+            
+            // Default view: Show hero unless a hash indicates a dashboard view (e.g. from a direct link)
+            const currentHash = window.location.hash.substring(1);
+            const validViews = ['all-tools', 'prompts', 'research', 'projects'];
+            if (validViews.includes(currentHash)) {
+                const viewName = currentHash.replace('all-', ''); // simplify for title
+                showDashboard(viewName);
+            } else {
+                 showHero();
+            }
+        });
+    </script>
 </body>
 </html>
