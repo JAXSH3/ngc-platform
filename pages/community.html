@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Feed - NGC</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        /* Specific styles for Community Feed */
+        .community-feed {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .post-form {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .post-form textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .post-form button {
+            display: block;
+            width: auto;
+            margin-left: auto; /* Align button to the right */
+        }
+
+        .feed-post {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .post-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            background-color: #ddd; /* Placeholder */
+            object-fit: cover;
+        }
+
+        .post-user-info .username {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .post-user-info .post-time {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .post-content p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1.5rem; /* Space between actions */
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .post-actions button {
+            background: none;
+            border: none;
+            color: #555;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .post-actions button:hover {
+            color: #007bff;
+        }
+
+        .post-actions button svg { /* For icons if used */
+            width: 18px;
+            height: 18px;
+        }
+
+        .sign-in-prompt {
+            text-align: center;
+            padding: 1rem;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        .sign-in-prompt a {
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <a href="../index.html" style="display: flex; align-items: center; text-decoration: none;">
+                    <img src="../assets/logo.png" alt="NGC Logo" class="logo">
+                    <span class="brand-name">NGC</span>
+                </a>
+            </div>
+            <div class="nav-middle">
+                <input type="search" class="smart-search-bar" placeholder="Search AI tools, prompts, research...">
+            </div>
+            <div class="nav-right">
+                <button class="auth-button" id="authButton">Login / Sign Up</button>
+            </div>
+        </nav>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <ul class="sidebar-nav-list">
+                    <li><a href="../index.html#all-tools">All Tools</a></li>
+                    <li><a href="../index.html#prompts">Prompts</a></li>
+                    <li><a href="../index.html#research">Research</a></li>
+                    <li><a href="../index.html#projects">Projects</a></li>
+                    <li><a href="community.html" style="background-color: #34495e; padding-left: 1.8rem;">Community Feed</a></li>
+                    <li><a href="premium_zone.html">Premium Zone</a></li>
+                    <li><a href="submit_resource.html">Submit a Resource</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <h1>Community Feed</h1>
+                </header>
+
+                <section class="community-feed">
+                    <!-- Sign-in prompt for posting/interacting -->
+                    <div class="sign-in-prompt" id="signInPrompt">
+                        <p>Please <a href="login.html">sign in</a> or <a href="signup.html">create an account</a> to post, like, comment, or follow.</p>
+                    </div>
+
+                    <!-- Post Form (visible if logged in) -->
+                    <div class="post-form" id="postForm" style="display: none;">
+                        <textarea placeholder="Share your thoughts on AI, Data Science, ML..."></textarea>
+                        <button class="btn">Post Update</button>
+                    </div>
+
+                    <!-- Dummy Feed Posts -->
+                    <div class="feed-post">
+                        <div class="post-header">
+                            <img src="../assets/avatar1.png" alt="User Avatar" class="post-avatar">
+                            <div class="post-user-info">
+                                <span class="username">AI Enthusiast</span>
+                                <span class="post-time">2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>Just read an amazing paper on new advancements in Reinforcement Learning. The potential for autonomous systems is mind-blowing! What are your thoughts? #AI #RL</p>
+                        </div>
+                        <div class="post-actions">
+                            <button class="like-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Like (15)</button>
+                            <button class="comment-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg> Comment (3)</button>
+                            <button class="repost-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg> Repost (1)</button>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+                    </div>
+
+                    <div class="feed-post">
+                        <div class="post-header">
+                            <img src="../assets/avatar2.png" alt="User Avatar" class="post-avatar">
+                            <div class="post-user-info">
+                                <span class="username">Data Scientist Pro</span>
+                                <span class="post-time">5 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>Excited to share my new open-source project on GitHub: a library for easy data preprocessing in Python. Check it out and let me know your feedback! #DataScience #Python #OpenSource</p>
+                            <p><a href="#" target="_blank">github.com/datasci_pro/preprocesslib</a></p>
+                        </div>
+                        <div class="post-actions">
+                             <button class="like-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Like (42)</button>
+                            <button class="comment-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg> Comment (8)</button>
+                            <button class="repost-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg> Repost (5)</button>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+                    </div>
+                     <!-- More posts can be added here -->
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 NGC. All rights reserved.</p>
+    </footer>
+
+    <script src="../js/app.js"></script>
+    <script>
+        // Basic logic for community page (placeholder for actual auth)
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = false; // Simulate user not logged in
+            const signInPrompt = document.getElementById('signInPrompt');
+            const postForm = document.getElementById('postForm');
+            const actionButtons = document.querySelectorAll('.post-actions button');
+
+            if (isLoggedIn) {
+                if(signInPrompt) signInPrompt.style.display = 'none';
+                if(postForm) postForm.style.display = 'block';
+            } else {
+                if(signInPrompt) signInPrompt.style.display = 'block';
+                if(postForm) postForm.style.display = 'none';
+                actionButtons.forEach(button => {
+                    if (!button.classList.contains('follow-btn')) { // Allow follow even if not logged in for demo
+                         button.disabled = true;
+                         button.style.opacity = 0.6;
+                         button.style.cursor = 'not-allowed';
+                    }
+                });
+            }
+
+            // Placeholder for auth button on this page
+            const authButtonPage = document.getElementById('authButton');
+            if(authButtonPage) {
+                authButtonPage.addEventListener('click', () => {
+                    alert('Redirecting to Login/Sign Up page...');
+                    // window.location.href = 'login.html'; // Or handle via main app.js if preferred
+                });
+            }
+        });
+    </script>
+</body>
+</html>

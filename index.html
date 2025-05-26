@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGC - Next Generation Community</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <img src="C:\Users\jashp\Desktop\ngc-platform\NGC_logo.png" alt="NGC Logo" class="logo">
+                <span class="brand-name">NGC</span>
+            </div>
+            <div class="nav-middle">
+                <input type="search" class="smart-search-bar" placeholder="Search AI tools, prompts, research...">
+            </div>
+            <div class="nav-right">
+                <button class="auth-button" id="authButton">Login / Sign Up</button>
+                <!-- <img src="assets/profile-icon.png" alt="User Profile" class="profile-icon" style="display:none;"> -->
+            </div>
+        </nav>
+
+        <div class="main-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar">
+                <ul class="sidebar-nav-list">
+                    <li><a href="#all-tools">All Tools</a></li>
+                    <li><a href="#prompts">Prompts</a></li>
+                    <li><a href="#research">Research</a></li>
+                    <li><a href="#projects">Projects</a>
+                    <li><a href="pages/community.html">Community Feed</a></li>
+                    <li><a href="pages/premium_zone.html">Premium Zone</a></li>
+                    <li><a href="pages/submit_resource.html">Submit a Resource</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Area (Dashboard) -->
+            <main class="main-content">
+                <header class="dashboard-header">
+                    <h1>Dashboard</h1>
+                    <div class="filters">
+                        <select id="category-filter">
+                            <option value="all">All Categories</option>
+                            <option value="research">Research Papers</option>
+                            <option value="projects">Projects</option>
+                            <option value="ai-tools">AI Tools</option>
+                            <option value="prompts">Prompts</option>
+                        </select>
+                        <select id="sort-filter">
+                            <option value="trending">Trending</option>
+                            <option value="most-used">Most Used</option>
+                            <option value="recent">Recently Added</option>
+                        </select>
+                    </div>
+                </header>
+                <section class="dashboard-grid" id="dashboardGrid">
+                    <!-- Content cards will be dynamically inserted here -->
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 NGC. All rights reserved.</p>
+        <p><em>AI Assistant/Chatbot (Future Scope)</em></p>
+        <p><em>Admin Panel (Future Scope)</em></p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

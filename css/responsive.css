@@ -1,0 +1,163 @@
+/* Responsive Design */
+
+/* Tablets and larger phones (e.g., iPads, larger Android phones) */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+    }
+
+    .nav-middle .smart-search-bar {
+        max-width: 400px; /* Slightly smaller search bar */
+    }
+
+    .sidebar {
+        width: 200px; /* Slightly narrower sidebar */
+    }
+
+    .main-content {
+        margin-left: 200px; /* Adjust for narrower sidebar */
+    }
+}
+
+/* Smaller tablets and landscape phones */
+@media (max-width: 768px) {
+    .top-nav {
+        padding: 0.5rem 1rem; /* Reduced padding */
+        height: auto; /* Allow height to adjust */
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align to left */
+        position: relative; /* Change from fixed for hamburger menu flow */
+    }
+
+    .nav-left {
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-middle {
+        width: 100%;
+        padding: 0 0 0.5rem 0; /* Adjust padding */
+        justify-content: flex-start;
+    }
+
+    .smart-search-bar {
+        width: 100%;
+        max-width: none; /* Full width */
+    }
+
+    .nav-right {
+        width: 100%;
+        justify-content: flex-end; /* Align button to right */
+        padding-top: 0.5rem;
+        border-top: 1px solid #eee;
+    }
+
+    .main-layout {
+        margin-top: 0; /* Reset margin as top-nav is not fixed */
+        flex-direction: column; /* Stack sidebar and content */
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto; /* Auto height for horizontal layout */
+        position: static; /* No longer fixed */
+        border-bottom: 1px solid #34495e;
+        display: none; /* Hidden by default, shown by hamburger */
+    }
+
+    .sidebar.active {
+        display: block; /* Show when active */
+    }
+
+    .sidebar-nav-list li a {
+        padding: 0.8rem 1rem; /* Adjust padding */
+        text-align: center;
+    }
+
+    .main-content {
+        margin-left: 0; /* No sidebar margin */
+        padding: 1rem;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-header h1 {
+        margin-bottom: 0.5rem;
+    }
+
+    .filters {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filters select {
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* 1 column for smaller screens */
+        gap: 1rem;
+    }
+
+    /* Hamburger Menu (to be added in HTML and JS) */
+    .hamburger-menu {
+        display: block; /* Show hamburger */
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        color: #2c3e50;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .top-nav .nav-left .brand-name {
+        font-size: 1.3rem;
+    }
+    .top-nav .logo {
+        height: 30px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .brand-name {
+        font-size: 1.2rem; /* Smaller brand name */
+    }
+
+    .logo {
+        height: 30px;
+    }
+
+    .auth-button {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .content-card {
+        padding: 1rem;
+    }
+
+    .content-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .page-container {
+        padding: 1rem;
+    }
+
+    .top-nav {
+        /* Ensure hamburger is visible if not already handled */
+    }
+
+    .hamburger-menu {
+        top: 12px; /* Adjust position if needed */
+        right: 12px;
+        font-size: 1.4rem;
+    }
+}
